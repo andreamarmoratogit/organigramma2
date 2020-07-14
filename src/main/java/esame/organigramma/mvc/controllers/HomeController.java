@@ -12,10 +12,9 @@ public class HomeController {
     OrganigrammaService organigrammaService;
     @PostMapping("/")
     @ResponseBody
-    public Organigramma nuovoOrganigramma(@RequestBody String nomi){
-        System.out.println("nuovoOrganigramma "+nomi);
-        int x=0;
-        return organigrammaService.createOrganigramma(nomi);
+    public int nuovoOrganigramma(@RequestBody String[] nomi){
+        System.out.println("nuovoOrganigramma "+nomi[0]+"  "+nomi[1]);
+        return organigrammaService.createOrganigramma(nomi[0],nomi[1]).getId();
 
     }
 

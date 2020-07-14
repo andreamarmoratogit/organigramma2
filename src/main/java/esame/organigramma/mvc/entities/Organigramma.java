@@ -1,6 +1,7 @@
 package esame.organigramma.mvc.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table( name = "organigramma")
@@ -9,6 +10,7 @@ public class Organigramma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id",nullable = false)
     private int id;
+
     @Basic
     @Column(name="nome",nullable = false,length = 50)
     private String nome;
@@ -38,5 +40,26 @@ public class Organigramma {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Organigramma)) return false;
+        Organigramma that = (Organigramma) o;
+        return getId() == that.getId() &&
+                Objects.equals(getNome(), that.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+    @Override
+    public String toString() {
+        return "Organigramma: " +
+                "id= " + id +
+                ", nome= " + nome + ' ' +
+                ", unitaRadice= " + unitaRadice;
     }
 }

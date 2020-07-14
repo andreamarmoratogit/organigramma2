@@ -2,6 +2,7 @@ package esame.organigramma.mvc.services;
 
 import esame.organigramma.mvc.entities.Organigramma;
 import esame.organigramma.mvc.entities.Unita;
+import esame.organigramma.mvc.entities.UnitaPadre;
 import esame.organigramma.mvc.repositories.OrganigrammaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,11 @@ public class OrganigrammaService {
     UnitaFactoryService unitaFactoryService;
 
     @Transactional
-    public Organigramma createOrganigramma(String nomeO){
+    public Organigramma createOrganigramma(String nomeO,String nomeU){
         Organigramma o=new Organigramma();
-        //UnitaPadre u=unitaFactoryService.createUnita(nomeU);
+        UnitaPadre u=unitaFactoryService.createUnita(nomeU);
         o.setNome(nomeO);
-        //o.setUnita(u);
+        o.setUnita(u);
         organigrammaRepository.save(o);
         return o;
     }

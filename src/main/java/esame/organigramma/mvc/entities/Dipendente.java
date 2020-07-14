@@ -1,6 +1,7 @@
 package esame.organigramma.mvc.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "dipendente")
@@ -50,4 +51,16 @@ public class Dipendente {
         return nome+" "+cognome+" "+ruolo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dipendente)) return false;
+        Dipendente that = (Dipendente) o;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
