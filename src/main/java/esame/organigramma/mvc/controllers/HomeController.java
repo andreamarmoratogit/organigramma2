@@ -14,8 +14,9 @@ public class HomeController {
     @ResponseBody
     public Organigramma nuovoOrganigramma(@RequestBody String nomi){
         System.out.println("nuovoOrganigramma "+nomi);
-
+        int x=0;
         return organigrammaService.createOrganigramma(nomi);
+
     }
 
 
