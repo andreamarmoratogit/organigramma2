@@ -8,9 +8,7 @@ import java.util.Objects;
 public class Ruolo {
 
     @Id
-    String nome;
-
-
+    private String nome;
 
     public String getNome() {
         return nome;

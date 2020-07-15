@@ -15,12 +15,15 @@ public abstract class UnitaPadre {
     private String nome;
 
     @ManyToMany
+    @JoinTable(name = "dip_unita",
+            joinColumns = @JoinColumn(name = "id_dip"),
+            inverseJoinColumns = @JoinColumn(name = "id_unita"))
     private List<Dipendente> listDip;
 
     @ManyToMany
     @JoinTable(name = "ruoli_unita",
-            joinColumns = @JoinColumn(name = "idR"),
-            inverseJoinColumns = @JoinColumn(name = "idU"))
+            joinColumns = @JoinColumn(name = "id_ruolo"),
+            inverseJoinColumns = @JoinColumn(name = "id_unita"))
     private List<Ruolo> ruoli;
 
     @OneToMany

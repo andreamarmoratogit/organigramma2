@@ -1,5 +1,4 @@
 package esame.organigramma.mvc.services;
-
 import esame.organigramma.mvc.entities.Organigramma;
 import esame.organigramma.mvc.entities.Unita;
 import esame.organigramma.mvc.entities.UnitaPadre;
@@ -16,13 +15,18 @@ public class OrganigrammaService {
     UnitaFactoryService unitaFactoryService;
 
     @Transactional
-    public Organigramma createOrganigramma(String nomeO,String nomeU){
+    public Organigramma createOrganigramma(String nomeO, String nomeU){
         Organigramma o=new Organigramma();
         UnitaPadre u=unitaFactoryService.createUnita(nomeU);
         o.setNome(nomeO);
         o.setUnita(u);
         organigrammaRepository.save(o);
         return o;
+    }
+    @Transactional
+    public Organigramma getOrganigramma(String nome){
+        return organigrammaRepository.findByNome(nome);
+
     }
 
     @Transactional

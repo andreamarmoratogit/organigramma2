@@ -14,6 +14,7 @@ public class Organigramma {
     @Basic
     @Column(name="nome",nullable = false,length = 50)
     private String nome;
+
     @OneToOne
     @JoinColumn(name = "Radice")
     private UnitaPadre unitaRadice;

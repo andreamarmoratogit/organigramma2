@@ -3,6 +3,8 @@ package esame.organigramma.mvc.controllers;
 import esame.organigramma.mvc.entities.Organigramma;
 import esame.organigramma.mvc.services.OrganigrammaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,10 +14,15 @@ public class HomeController {
     OrganigrammaService organigrammaService;
     @PostMapping("/")
     @ResponseBody
-    public int nuovoOrganigramma(@RequestBody String[] nomi){
+    public ResponseEntity<Organigramma> nuovoOrganigramma(@RequestBody String[] nomi){
         System.out.println("nuovoOrganigramma "+nomi[0]+"  "+nomi[1]);
-        return organigrammaService.createOrganigramma(nomi[0],nomi[1]).getId();
+        return new ResponseEntity<Organigramma>(organigrammaService.createOrganigramma(nomi[0],nomi[1]), HttpStatus.OK);
+    }
 
+    @GetMapping("/{nome}")
+    public @ResponseBody Organigramma getOrganigramma(@PathVariable String nome){
+        System.out.println("get organigramma: "+nome);
+        return organigrammaService.getOrganigramma(nome);
     }
 
 
