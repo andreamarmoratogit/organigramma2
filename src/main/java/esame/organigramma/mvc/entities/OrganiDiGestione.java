@@ -5,5 +5,9 @@ import javax.persistence.*;
 @Table(name = "organi_di_gestione")
 public class OrganiDiGestione extends UnitaPadre {
 
+    public OrganiDiGestione(){
+        super();
+    }
+
 
 }

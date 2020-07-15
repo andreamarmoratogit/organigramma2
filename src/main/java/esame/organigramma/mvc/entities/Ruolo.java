@@ -10,6 +10,10 @@ public class Ruolo {
     @Id
     private String nome;
 
+    public Ruolo(){
+        nome="null";
+    }
+
     public String getNome() {
         return nome;
     }

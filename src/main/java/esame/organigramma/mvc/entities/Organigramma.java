@@ -1,5 +1,4 @@
 package esame.organigramma.mvc.entities;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -18,6 +17,12 @@ public class Organigramma {
     @OneToOne
     @JoinColumn(name = "Radice")
     private UnitaPadre unitaRadice;
+
+    public Organigramma(){
+        id=-1;
+        nome="null";
+        unitaRadice=null;
+    }
 
     public int getId() {
         return id;

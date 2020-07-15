@@ -1,11 +1,12 @@
 package esame.organigramma.mvc.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "unita_padre")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class UnitaPadre {
+public abstract class UnitaPadre  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -16,19 +17,30 @@ public abstract class UnitaPadre {
 
     @ManyToMany
     @JoinTable(name = "dip_unita",
-            joinColumns = @JoinColumn(name = "id_dip"),
-            inverseJoinColumns = @JoinColumn(name = "id_unita"))
+            joinColumns = @JoinColumn(name = "id_unita"),
+            inverseJoinColumns = @JoinColumn(name = "id_dip"))
     private List<Dipendente> listDip;
 
     @ManyToMany
     @JoinTable(name = "ruoli_unita",
-            joinColumns = @JoinColumn(name = "id_ruolo"),
-            inverseJoinColumns = @JoinColumn(name = "id_unita"))
+            joinColumns = @JoinColumn(name = "id_unita"),
+            inverseJoinColumns = @JoinColumn(name = "id_ruolo"))
     private List<Ruolo> ruoli;
 
-    @OneToMany
-    @JoinColumn(name = "id")
+    @OneToMany(mappedBy = "padre")
     private List<UnitaPadre> figli;
+
+    @ManyToOne
+    @JoinColumn(name = "padre")
+    private UnitaPadre padre;
+
+    public UnitaPadre() {
+        this.id = -1;
+        this.nome = "nome";
+        this.listDip = new ArrayList<Dipendente>() ;
+        this.ruoli = new ArrayList<Ruolo>();
+        this.figli = null;
+    }
 
     public void removeFiglio(UnitaPadre u){
         figli.remove(u);

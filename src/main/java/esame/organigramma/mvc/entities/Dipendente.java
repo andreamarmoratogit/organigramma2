@@ -19,6 +19,13 @@ public class Dipendente {
     @Column(name="ruolo")
     private String ruolo;
 
+    public Dipendente(){
+        id=-1;
+        nome="null";
+        cognome="null";
+        ruolo="null";
+    }
+
     public String getCognome() {
         return cognome;
     }
