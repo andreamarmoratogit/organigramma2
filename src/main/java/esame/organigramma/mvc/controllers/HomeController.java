@@ -16,13 +16,14 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity<Organigramma> nuovoOrganigramma(@RequestBody String[] nomi){
         System.out.println("nuovoOrganigramma "+nomi[0]+"  "+nomi[1]);
-        return new ResponseEntity<Organigramma>(organigrammaService.createOrganigramma(nomi[0],nomi[1]), HttpStatus.OK);
+        return new ResponseEntity<>(organigrammaService.createOrganigramma(nomi[0],nomi[1]), HttpStatus.OK);
     }
 
     @GetMapping("/{nome}")
-    public @ResponseBody Organigramma getOrganigramma(@PathVariable String nome){
+    @ResponseBody
+    public ResponseEntity<Organigramma> getOrganigramma(@PathVariable String nome){
         System.out.println("get organigramma: "+nome);
-        return organigrammaService.getOrganigramma(nome);
+        return new ResponseEntity<>(organigrammaService.getOrganigramma(nome), HttpStatus.OK);
     }
 
 

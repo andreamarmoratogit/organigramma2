@@ -14,12 +14,11 @@ public class Organigramma {
     @Column(name="nome",nullable = false,length = 50)
     private String nome;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "Radice")
     private UnitaPadre unitaRadice;
 
     public Organigramma(){
-        id=-1;
         nome="null";
         unitaRadice=null;
     }

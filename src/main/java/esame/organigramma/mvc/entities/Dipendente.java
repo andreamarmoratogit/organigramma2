@@ -20,7 +20,6 @@ public class Dipendente {
     private String ruolo;
 
     public Dipendente(){
-        id=-1;
         nome="null";
         cognome="null";
         ruolo="null";

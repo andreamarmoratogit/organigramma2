@@ -23,7 +23,7 @@ public class OrganigrammaService {
         organigrammaRepository.save(o);
         return o;
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public Organigramma getOrganigramma(String nome){
         return organigrammaRepository.findByNome(nome);
 

@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UnitaFactoryService {
     @Autowired
@@ -62,10 +66,17 @@ public class UnitaFactoryService {
     }
 
     @Transactional
-    public boolean addFiglio(UnitaPadre up,UnitaPadre uo){
-        if(uo.addFiglio(up))return true;
-        unitaPadreRepository.save(uo);
-        return false;
+    public boolean addFiglio(int idPadre,UnitaPadre uFiglio){
+        UnitaPadre up=unitaPadreRepository.findById(idPadre);
+        List<UnitaPadre> figli=up.getFigli();
+        if(figli==null)figli=new ArrayList<UnitaPadre>();
+        figli.add(uFiglio);
+        up.setFigli(figli);
+        uFiglio.setPadre(up);
+        unitaPadreRepository.save(up);
+        unitaPadreRepository.save(uFiglio);
+        System.out.println(up.toString()+"\n"+uFiglio.toString());
+        return true;
     }
     @Transactional
     public void removeFiglio(UnitaPadre u, UnitaPadre ufiglio){

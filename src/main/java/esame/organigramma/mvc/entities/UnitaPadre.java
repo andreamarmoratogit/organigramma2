@@ -1,12 +1,15 @@
 package esame.organigramma.mvc.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "unita_padre")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class UnitaPadre  {
+public class UnitaPadre  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,31 +18,33 @@ public abstract class UnitaPadre  {
     @Column(name="nome")
     private String nome;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "dip_unita",
             joinColumns = @JoinColumn(name = "id_unita"),
             inverseJoinColumns = @JoinColumn(name = "id_dip"))
     private List<Dipendente> listDip;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "ruoli_unita",
             joinColumns = @JoinColumn(name = "id_unita"),
             inverseJoinColumns = @JoinColumn(name = "id_ruolo"))
     private List<Ruolo> ruoli;
 
-    @OneToMany(mappedBy = "padre")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "padre")
+    @JsonManagedReference
     private List<UnitaPadre> figli;
 
-    @ManyToOne
-    @JoinColumn(name = "padre")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn( name = "padre")
+    @JsonBackReference
     private UnitaPadre padre;
 
     public UnitaPadre() {
-        this.id = -1;
         this.nome = "nome";
         this.listDip = new ArrayList<Dipendente>() ;
         this.ruoli = new ArrayList<Ruolo>();
         this.figli = null;
+        this.padre = null;
     }
 
     public void removeFiglio(UnitaPadre u){
@@ -73,6 +78,8 @@ public abstract class UnitaPadre  {
     }
     public List<Dipendente> getListDip() { return listDip; }
     public void setListDip(List<Dipendente> listDip) { this.listDip = listDip; }
+    public UnitaPadre getPadre() { return padre; }
+    public void setPadre(UnitaPadre padre) { this.padre = padre; }
 
     //adder
     public void addDip(Dipendente d) {
@@ -87,5 +94,15 @@ public abstract class UnitaPadre  {
         if(figli.contains(u))return false;
         figli.add(u);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String ret=id+", "+nome+", "+listDip+", "+ruoli+", "+padre;
+        if(figli!=null){
+            for(UnitaPadre u:figli)
+                ret+=", "+u.nome;
+        }
+        return ret;
     }
 }
