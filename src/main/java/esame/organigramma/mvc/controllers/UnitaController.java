@@ -32,13 +32,13 @@ public class UnitaController {
 
     @PostMapping("/unita")
     @ResponseBody
-    public ResponseEntity creaUnita( @RequestBody String[] unita){
+    public ResponseEntity<UnitaPadre> creaUnita( @RequestBody String[] unita){
         UnitaPadre u;
         if(unita[0].equals("unita"))u=unitaFactoryService.createUnita(unita[1]);
         else if (unita[0].equals("sottounita"))u=unitaFactoryService.createSottounita(unita[1]);
         else u=unitaFactoryService.createOrgani(unita[1]);
         if(u==null)return new ResponseEntity("impossibile aggiungere unita",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity(u, HttpStatus.OK);
+        return new ResponseEntity<>(u, HttpStatus.OK);
     }
     @PostMapping("/unita/{orgId}")
     @ResponseBody
