@@ -14,6 +14,8 @@ public class Ruolo {
         nome="null";
     }
 
+    public Ruolo(String r){nome=r;}
+
     public String getNome() {
         return nome;
     }

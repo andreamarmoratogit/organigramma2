@@ -43,4 +43,9 @@ public class OrganigrammaService {
 
     }
 
+    @Transactional
+    public Organigramma getById(int id){
+        return organigrammaRepository.findById(id);
+    }
+
 }

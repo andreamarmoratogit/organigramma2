@@ -1,5 +1,6 @@
 package esame.organigramma.mvc.repositories;
 
+import esame.organigramma.mvc.entities.Ruolo;
 import esame.organigramma.mvc.entities.UnitaPadre;
 import org.springframework.data.jpa.repository.JpaRepository;
 

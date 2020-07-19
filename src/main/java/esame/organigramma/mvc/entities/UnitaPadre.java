@@ -43,7 +43,7 @@ public class UnitaPadre  {
         this.nome = "nome";
         this.listDip = new ArrayList<Dipendente>() ;
         this.ruoli = new ArrayList<Ruolo>();
-        this.figli = null;
+        this.figli = new ArrayList<>();
         this.padre = null;
     }
 

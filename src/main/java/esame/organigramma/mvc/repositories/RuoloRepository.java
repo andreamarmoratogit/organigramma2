@@ -4,4 +4,5 @@ import esame.organigramma.mvc.entities.Ruolo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RuoloRepository extends JpaRepository<Ruolo,String> {
+    Ruolo findByNome(String n);
 }

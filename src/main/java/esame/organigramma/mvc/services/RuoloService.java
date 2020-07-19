@@ -15,8 +15,7 @@ public class RuoloService {
 
     @Transactional
     public Ruolo createRuolo(String nome){
-        Ruolo r=new Ruolo();
-        r.setNome(nome);
+        Ruolo r=new Ruolo(nome);
         ruoloRepository.save(r);
         return r;
     }

@@ -1,6 +1,7 @@
 package esame.organigramma.mvc.services;
 
 import esame.organigramma.mvc.entities.*;
+import esame.organigramma.mvc.repositories.RuoloRepository;
 import esame.organigramma.mvc.repositories.UnitaPadreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.List;
 public class UnitaFactoryService {
     @Autowired
     UnitaPadreRepository unitaPadreRepository;
+    @Autowired
+    RuoloRepository ruoloRepository;
 
     @Transactional
     public Unita createUnita(String nome){
@@ -53,17 +56,6 @@ public class UnitaFactoryService {
         unitaPadreRepository.save(u);
     }
 
-    @Transactional
-    public boolean controllaRuolo(int id,String ruolo){
-        UnitaPadre u=unitaPadreRepository.findById(id);
-        for(Ruolo r:u.getRuoli()){
-            if(r.getNome().equals(ruolo))
-                for(Dipendente d:u.getListDip()){
-                    if(d.getRuolo().equals(ruolo))return false;
-                }
-        }
-        return true;
-    }
 
     @Transactional
     public boolean addFiglio(int idPadre,UnitaPadre uFiglio){
@@ -82,5 +74,11 @@ public class UnitaFactoryService {
     public void removeFiglio(UnitaPadre u, UnitaPadre ufiglio){
         u.removeFiglio(ufiglio);
         unitaPadreRepository.save(u);
+    }
+
+    @Transactional
+    public boolean containsRuolo(int id, String r){
+        Ruolo ruolo = ruoloRepository.findByNome(r);
+        return unitaPadreRepository.findById(id).getRuoli().contains(ruolo);
     }
 }

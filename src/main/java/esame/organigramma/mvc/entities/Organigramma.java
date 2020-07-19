@@ -65,6 +65,6 @@ public class Organigramma {
         return "Organigramma: " +
                 "id= " + id +
                 ", nome= " + nome + ' ' +
-                ", unitaRadice= " + unitaRadice;
+                ", unitaRadice= " + unitaRadice.toString();
     }
 }
