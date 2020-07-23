@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Table(name = "unita_padre")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class UnitaPadre  {
+public abstract class UnitaPadre  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,32 +36,31 @@ public class UnitaPadre  {
     @JsonManagedReference
     private List<UnitaPadre> figli;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn( name = "padre")
     @JsonBackReference
     private UnitaPadre padre;
 
+    @Basic
+    @JoinColumn(name = "tipo")
+    protected String tipo;
+
     public UnitaPadre() {
         this.nome = "nome";
-        this.listDip = new ArrayList<Dipendente>() ;
-        this.ruoli = new ArrayList<Ruolo>();
+        this.listDip = new ArrayList<>() ;
+        this.ruoli = new ArrayList<>();
         this.figli = new ArrayList<>();
         this.padre = null;
     }
 
-    public void removeFiglio(UnitaPadre u){
-        figli.remove(u);
-    }
-
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
     public List<UnitaPadre> getFigli() {
         return figli;
     }
-
     public void setFigli(List<UnitaPadre> figli) {
         this.figli = figli;
     }
-
-    //setter and getter
     public List<Ruolo> getRuoli() {
         return ruoli;
     }
@@ -90,10 +91,17 @@ public class UnitaPadre  {
         if(!ruoli.contains(r))ruoli.add(r);
     }
 
-    public boolean addFiglio(UnitaPadre u){
-        if(figli.contains(u))return false;
-        figli.add(u);
-        return true;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UnitaPadre)) return false;
+        UnitaPadre that = (UnitaPadre) o;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     @Override

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrganigrammaRepository extends JpaRepository<Organigramma,Integer> {
     Organigramma findById(int id);
-    Organigramma findByNome(String nome);
+    Organigramma findByNomeIgnoreCase(String nome);
     
 }

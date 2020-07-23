@@ -8,7 +8,13 @@ import java.util.Objects;
 public class Ruolo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "nome")
     private String nome;
+
+
 
     public Ruolo(){
         nome="null";
@@ -19,10 +25,11 @@ public class Ruolo {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     @Override
     public String toString() {

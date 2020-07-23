@@ -15,14 +15,15 @@ public class Dipendente {
     @Basic
     @Column(name = "cognome")
     private String cognome;
-    @Basic
-    @Column(name="ruolo")
-    private String ruolo;
+
+    @OneToOne()
+    @JoinColumn(name="id_ruolo")
+    private Ruolo ruolo;
 
     public Dipendente(){
         nome="null";
         cognome="null";
-        ruolo="null";
+        ruolo=new Ruolo();
     }
 
     public String getCognome() {
@@ -49,9 +50,9 @@ public class Dipendente {
         this.nome = nome;
     }
 
-    public String getRuolo() { return ruolo; }
+    public Ruolo getRuolo() { return ruolo; }
 
-    public void setRuolo(String ruolo) { this.ruolo = ruolo; }
+    public void setRuolo(Ruolo ruolo) { this.ruolo = ruolo; }
 
     public String toString(){
         return nome+" "+cognome+" "+ruolo;

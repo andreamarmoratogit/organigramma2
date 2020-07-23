@@ -1,6 +1,5 @@
 package esame.organigramma.mvc.services;
 import esame.organigramma.mvc.entities.Organigramma;
-import esame.organigramma.mvc.entities.Unita;
 import esame.organigramma.mvc.entities.UnitaPadre;
 import esame.organigramma.mvc.repositories.OrganigrammaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class OrganigrammaService {
     @Transactional
     public Organigramma createOrganigramma(String nomeO, String nomeU){
         Organigramma o=new Organigramma();
-        UnitaPadre u=unitaFactoryService.createUnita(nomeU);
+        UnitaPadre u=unitaFactoryService.createUnitaOrganizzativa(nomeU, "unita");
         o.setNome(nomeO);
         o.setUnita(u);
         organigrammaRepository.save(o);
@@ -25,7 +24,8 @@ public class OrganigrammaService {
     }
     @Transactional(readOnly = true)
     public Organigramma getOrganigramma(String nome){
-        return organigrammaRepository.findByNome(nome);
+        Organigramma o= organigrammaRepository.findByNomeIgnoreCase(nome);
+        return o;
 
     }
 
@@ -35,13 +35,7 @@ public class OrganigrammaService {
         organigrammaRepository.save(o);
     }
 
-    @Transactional
-    public void setRadice(int id,String nome){
-        Unita u =unitaFactoryService.createUnita(nome);
-        Organigramma o=organigrammaRepository.findById(id);
-        o.setUnita(u);
 
-    }
 
     @Transactional
     public Organigramma getById(int id){

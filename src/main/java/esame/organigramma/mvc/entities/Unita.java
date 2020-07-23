@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Unita extends UnitaPadre {
     public Unita(){
         super();
+        this.tipo = "Unita";
     }
 
 }

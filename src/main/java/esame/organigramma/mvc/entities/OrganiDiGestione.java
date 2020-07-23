@@ -7,6 +7,7 @@ public class OrganiDiGestione extends UnitaPadre {
 
     public OrganiDiGestione(){
         super();
+        this.tipo="Organi Di Gestione";
     }
 
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
     @Autowired
     OrganigrammaService organigrammaService;
+
     @PostMapping("/")
     @ResponseBody
     public ResponseEntity<Organigramma> nuovoOrganigramma(@RequestBody String[] nomi){

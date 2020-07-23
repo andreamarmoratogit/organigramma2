@@ -15,7 +15,7 @@ public class DipendenteService {
     private DipendenteRepository dipendenteRepository;
 
     @Transactional
-    public Dipendente CreateDip(String nome, String cognome, String r){
+    public Dipendente createDip(String nome, String cognome, Ruolo r){
         Dipendente d=new Dipendente();
         d.setNome(nome);
         d.setCognome(cognome);

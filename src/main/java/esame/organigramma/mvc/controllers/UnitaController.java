@@ -1,10 +1,9 @@
 package esame.organigramma.mvc.controllers;
 
-import esame.organigramma.mvc.entities.Dipendente;
+
 import esame.organigramma.mvc.entities.Organigramma;
 import esame.organigramma.mvc.entities.Ruolo;
 import esame.organigramma.mvc.entities.UnitaPadre;
-import esame.organigramma.mvc.repositories.UnitaPadreRepository;
 import esame.organigramma.mvc.services.DipendenteService;
 import esame.organigramma.mvc.services.OrganigrammaService;
 import esame.organigramma.mvc.services.RuoloService;
@@ -14,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -30,24 +29,19 @@ public class UnitaController {
     OrganigrammaService organigrammaService;
 
 
-    @PostMapping("/unita")
+   /* @PostMapping("/unita")
     @ResponseBody
     public ResponseEntity<UnitaPadre> creaUnita( @RequestBody String[] unita){
-        UnitaPadre u;
-        if(unita[0].equals("unita"))u=unitaFactoryService.createUnita(unita[1]);
-        else if (unita[0].equals("sottounita"))u=unitaFactoryService.createSottounita(unita[1]);
-        else u=unitaFactoryService.createOrgani(unita[1]);
+        UnitaPadre u = unitaFactoryService.createUnitaOrganizzativa(unita[1], unita[0]);
         if(u==null)return new ResponseEntity("impossibile aggiungere unita",HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(u, HttpStatus.OK);
-    }
+    }*/
+
     @PostMapping("/unita/{orgId}")
     @ResponseBody
     public ResponseEntity<Organigramma> addUnita(@PathVariable int orgId, @RequestBody String[] unita){
-        UnitaPadre u;
+        UnitaPadre u = unitaFactoryService.createUnitaOrganizzativa(unita[2], unita[1]);
         System.out.println(unita[0]+" "+unita[1]+" "+unita[2]);
-        if(unita[1].equals("unita"))u=unitaFactoryService.createUnita(unita[2]);
-        else if (unita[1].equals("sottounita"))u=unitaFactoryService.createSottounita(unita[2]);
-        else u=unitaFactoryService.createOrgani(unita[1]);
         if(u!=null && !unitaFactoryService.addFiglio(Integer.parseInt(unita[0]) ,u))
             return new ResponseEntity("impossibile aggiungere unita",HttpStatus.BAD_REQUEST);
         Organigramma o=organigrammaService.getById(orgId);
@@ -58,24 +52,49 @@ public class UnitaController {
 
     @PostMapping("/dipendente/{orgId}")
     @ResponseBody
-    public ResponseEntity addDipendente(@PathVariable int orgId,@RequestBody String[] dip){
+    public ResponseEntity<Organigramma> addDipendente(@PathVariable int orgId,@RequestBody String[] dip){
         int idU = Integer.parseInt(dip[0]);
-        if(unitaFactoryService.containsRuolo(idU,dip[3])) {
-            Dipendente d = dipendenteService.CreateDip(dip[1], dip[2], dip[3]);
-            unitaFactoryService.addDip(idU,d);
-            return new ResponseEntity(organigrammaService.getById(orgId),HttpStatus.OK);
+        Ruolo r=unitaFactoryService.containsRuolo(idU,dip[3]);
+        if(r!=null) {
+            unitaFactoryService.addDip(idU,dip[1], dip[2],r);
+
+            return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
         }
         return new ResponseEntity("impossibile aggiungere dipendente",HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/ruolo/{orgId}")
     @ResponseBody
-    public ResponseEntity addRuolo(@PathVariable int orgId, @RequestBody String[] r){
+    public ResponseEntity<Organigramma> addRuolo(@PathVariable int orgId, @RequestBody String[] r){
         Ruolo ruolo=ruoloService.createRuolo(r[1]);
         unitaFactoryService.addRuolo(ruolo,Integer.parseInt(r[0]));
-        return new ResponseEntity(organigrammaService.getById(orgId),HttpStatus.OK);
+        return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
     }
 
+    @DeleteMapping("/unitaDel/{orgId}/{idU}")
+    @ResponseBody
+    public ResponseEntity<Organigramma> delUnita(@PathVariable int orgId, @PathVariable int idU){
+        if(!unitaFactoryService.removeUnita(idU)){
+            return new ResponseEntity("impossibile aggiungere dipendente",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
+    }
 
+    @DeleteMapping("dipendente/{orgId}/{idU}/{idD}")
+    @ResponseBody
+    public ResponseEntity<Organigramma> delDipendente(@PathVariable int orgId,@PathVariable int idU,@PathVariable int idD){
 
+        if(!unitaFactoryService.removeDip(idU,idD))
+            return new ResponseEntity("impossibile rimuovere dipendente",HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
+    }
+
+    @DeleteMapping("ruolo/{orgId}/{idU}/{nome}")
+    @ResponseBody
+    public ResponseEntity<Organigramma> delRuolo(@PathVariable int orgId,@PathVariable int idU,@PathVariable String nome){
+        if(unitaFactoryService.removeRuolo(idU, nome))
+            return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
+        return new ResponseEntity("impossibile rimuovere ruolo",HttpStatus.BAD_REQUEST);
+    }
 }
