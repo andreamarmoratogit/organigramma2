@@ -14,8 +14,6 @@ public class Ruolo {
     @Column(name = "nome")
     private String nome;
 
-
-
     public Ruolo(){
         nome="null";
     }

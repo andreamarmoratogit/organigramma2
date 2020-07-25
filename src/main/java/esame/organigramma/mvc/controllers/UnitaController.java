@@ -28,14 +28,7 @@ public class UnitaController {
     @Autowired
     OrganigrammaService organigrammaService;
 
-
-   /* @PostMapping("/unita")
-    @ResponseBody
-    public ResponseEntity<UnitaPadre> creaUnita( @RequestBody String[] unita){
-        UnitaPadre u = unitaFactoryService.createUnitaOrganizzativa(unita[1], unita[0]);
-        if(u==null)return new ResponseEntity("impossibile aggiungere unita",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(u, HttpStatus.OK);
-    }*/
+    //metodi che ricevono le richieste http dal front-end per la gestione dell'organigramma
 
     @PostMapping("/unita/{orgId}")
     @ResponseBody
@@ -71,11 +64,11 @@ public class UnitaController {
         return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
     }
 
-    @DeleteMapping("/unitaDel/{orgId}/{idU}")
+    @DeleteMapping("/unita/{orgId}/{idU}")
     @ResponseBody
     public ResponseEntity<Organigramma> delUnita(@PathVariable int orgId, @PathVariable int idU){
         if(!unitaFactoryService.removeUnita(idU)){
-            return new ResponseEntity("impossibile aggiungere dipendente",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("impossibile rimuovere unita",HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
     }
@@ -85,7 +78,7 @@ public class UnitaController {
     public ResponseEntity<Organigramma> delDipendente(@PathVariable int orgId,@PathVariable int idU,@PathVariable int idD){
 
         if(!unitaFactoryService.removeDip(idU,idD))
-            return new ResponseEntity("impossibile rimuovere dipendente",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("dipendente non trovato",HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
     }
@@ -95,6 +88,6 @@ public class UnitaController {
     public ResponseEntity<Organigramma> delRuolo(@PathVariable int orgId,@PathVariable int idU,@PathVariable String nome){
         if(unitaFactoryService.removeRuolo(idU, nome))
             return new ResponseEntity<>(organigrammaService.getById(orgId),HttpStatus.OK);
-        return new ResponseEntity("impossibile rimuovere ruolo",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("ruolo non trovato",HttpStatus.BAD_REQUEST);
     }
 }

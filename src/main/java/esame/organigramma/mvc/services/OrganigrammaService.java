@@ -22,11 +22,11 @@ public class OrganigrammaService {
         organigrammaRepository.save(o);
         return o;
     }
+
     @Transactional(readOnly = true)
     public Organigramma getOrganigramma(String nome){
         Organigramma o= organigrammaRepository.findByNomeIgnoreCase(nome);
         return o;
-
     }
 
     @Transactional
@@ -34,8 +34,6 @@ public class OrganigrammaService {
         Organigramma o=organigrammaRepository.findById(id);
         organigrammaRepository.save(o);
     }
-
-
 
     @Transactional
     public Organigramma getById(int id){

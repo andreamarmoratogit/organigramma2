@@ -55,7 +55,6 @@ public class Organigramma {
         return getId() == that.getId() &&
                 Objects.equals(getNome(), that.getNome());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getId());

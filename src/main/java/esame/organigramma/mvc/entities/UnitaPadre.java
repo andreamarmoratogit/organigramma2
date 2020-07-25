@@ -81,12 +81,9 @@ public abstract class UnitaPadre  {
     public void setListDip(List<Dipendente> listDip) { this.listDip = listDip; }
     public UnitaPadre getPadre() { return padre; }
     public void setPadre(UnitaPadre padre) { this.padre = padre; }
-
-    //adder
     public void addDip(Dipendente d) {
         listDip.add(d);
     }
-
     public void addRuolo(Ruolo r){
         if(!ruoli.contains(r))ruoli.add(r);
     }

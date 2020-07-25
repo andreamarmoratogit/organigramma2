@@ -23,6 +23,7 @@ public class DipendenteService {
         dipendenteRepository.save(d);
         return d;
     }
+
     @Transactional(readOnly = true)
     public List<Dipendente> getDipententi(){
         return dipendenteRepository.findAll();

@@ -23,6 +23,7 @@ public class UnitaFactoryService {
     @Autowired
     DipendenteService dipendenteService;
 
+    //metodo factory per creare una nuova unita e assegnare dei ruoli standard in base al tipo
     @Transactional
     public UnitaPadre createUnitaOrganizzativa(String nome, String tipo){
         UnitaPadre u;
@@ -60,7 +61,7 @@ public class UnitaFactoryService {
         return u;
     }
 
-
+    //aggiunge un nuovo dipendente e rimuove il ruolo che assumera dalla lista dei ruoli disponibili nell unita padre
     @Transactional
     public void addDip(int id, String nome, String cognome, Ruolo ruolo){
         UnitaPadre u=unitaPadreRepository.findById(id);
@@ -79,7 +80,7 @@ public class UnitaFactoryService {
         unitaPadreRepository.save(u);
     }
 
-
+    //aggiunge un nuovo figlio all`unita padre data da idPadre
     @Transactional
     public boolean addFiglio(int idPadre,UnitaPadre uFiglio){
         UnitaPadre up=unitaPadreRepository.findById(idPadre);
@@ -94,6 +95,7 @@ public class UnitaFactoryService {
         return true;
     }
 
+    //verifica che l`unita data da id abbia il ruolo r tra i ruoli disponibili
     @Transactional
     public Ruolo containsRuolo(int id, String r){
         List<Ruolo> ruoli=unitaPadreRepository.findById(id).getRuoli();
@@ -105,12 +107,12 @@ public class UnitaFactoryService {
 
     @Transactional
     public boolean removeUnita(int id){
-        //UnitaPadre u = unitaPadreRepository.findById(id);
-        //if(u == null)return false;
+        if(unitaPadreRepository.findById(id) == null)return false;
         unitaPadreRepository.deleteById(id);
         return true;
     }
 
+    //rimuove il dipendente dall`unita ed aggiunge il ruolo del dipendente rimosso tra i ruoli disponibili
     @Transactional
     public boolean removeDip(int idU, int idD){
         UnitaPadre u=unitaPadreRepository.findById(idU);
@@ -131,7 +133,7 @@ public class UnitaFactoryService {
         if(u==null)return false;
         List<Ruolo> rlist = u.getRuoli();
         for(Ruolo r : rlist){
-            if(r.getNome().equals(nome)){
+            if(r.getNome().equalsIgnoreCase(nome)){
                 ruoloRepository.delete(r);
                 rlist.remove(r);
                 unitaPadreRepository.save(u);
