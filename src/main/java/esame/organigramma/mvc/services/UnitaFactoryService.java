@@ -69,14 +69,15 @@ public class UnitaFactoryService {
         r.remove(ruolo);
         u.setRuoli(r);
         Dipendente d=dipendenteService.createDip(nome,cognome,ruolo);
-        u.addDip(d);
+        u.getListDip().add(d);
         unitaPadreRepository.save(u);
 
     }
+
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void addRuolo(Ruolo r, int id ){
         UnitaPadre u=unitaPadreRepository.findById(id);
-        u.addRuolo(r);
+        u.getRuoli().add(r);
         unitaPadreRepository.save(u);
     }
 

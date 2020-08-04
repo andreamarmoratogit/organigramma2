@@ -18,21 +18,24 @@ public class Organigramma {
     @JoinColumn(name = "Radice")
     private UnitaPadre unitaRadice;
 
+    @Version
+    private int version;
+
     public Organigramma(){
         nome="null";
         unitaRadice=null;
     }
 
+    public UnitaPadre getUnitaRadice() { return unitaRadice; }
+
+    public void setUnitaRadice(UnitaPadre unitaRadice) { this.unitaRadice = unitaRadice; }
+
+    public int getVersion() { return version; }
+
+    public void setVersion(int version) { this.version = version; }
+
     public int getId() {
         return id;
-    }
-
-    public UnitaPadre getUnita() {
-        return unitaRadice;
-    }
-
-    public void setUnita(UnitaPadre unita) {
-        this.unitaRadice = unita;
     }
 
     public void setId(int id) {

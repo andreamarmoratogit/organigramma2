@@ -45,6 +45,9 @@ public abstract class UnitaPadre  {
     @JoinColumn(name = "tipo")
     protected String tipo;
 
+    @Version
+    private int version;
+
     public UnitaPadre() {
         this.nome = "nome";
         this.listDip = new ArrayList<>() ;
@@ -53,6 +56,8 @@ public abstract class UnitaPadre  {
         this.padre = null;
     }
 
+    public int getVersion() { return version; }
+    public void setVersion(int version) { this.version = version; }
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
     public List<UnitaPadre> getFigli() {
@@ -81,12 +86,7 @@ public abstract class UnitaPadre  {
     public void setListDip(List<Dipendente> listDip) { this.listDip = listDip; }
     public UnitaPadre getPadre() { return padre; }
     public void setPadre(UnitaPadre padre) { this.padre = padre; }
-    public void addDip(Dipendente d) {
-        listDip.add(d);
-    }
-    public void addRuolo(Ruolo r){
-        if(!ruoli.contains(r))ruoli.add(r);
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -106,7 +106,7 @@ public abstract class UnitaPadre  {
         String ret=id+", "+nome+", "+listDip+", "+ruoli+", "+padre;
         if(figli!=null){
             for(UnitaPadre u:figli)
-                ret+=", "+u.nome;
+                ret += ", "+u.nome;
         }
         return ret;
     }

@@ -20,11 +20,18 @@ public class Dipendente {
     @JoinColumn(name="id_ruolo")
     private Ruolo ruolo;
 
+    @Version
+    private int version;
+
     public Dipendente(){
         nome="null";
         cognome="null";
         ruolo=new Ruolo();
     }
+
+    public int getVersion() { return version; }
+
+    public void setVersion(int version) { this.version = version; }
 
     public String getCognome() {
         return cognome;

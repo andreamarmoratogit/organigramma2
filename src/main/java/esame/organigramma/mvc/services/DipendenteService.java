@@ -24,6 +24,17 @@ public class DipendenteService {
         return d;
     }
 
+    @Transactional
+    public Dipendente findDip(String nome, String congome){
+        return dipendenteRepository.findFirstByNomeIgnoreCaseAndCognomeIgnoreCase(nome, congome);
+
+    }
+
+    @Transactional
+    public Dipendente findById(int id){
+        return dipendenteRepository.findById(id);
+    }
+
     @Transactional(readOnly = true)
     public List<Dipendente> getDipententi(){
         return dipendenteRepository.findAll();

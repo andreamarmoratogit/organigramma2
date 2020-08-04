@@ -18,7 +18,7 @@ public class OrganigrammaService {
         Organigramma o=new Organigramma();
         UnitaPadre u=unitaFactoryService.createUnitaOrganizzativa(nomeU, "unita");
         o.setNome(nomeO);
-        o.setUnita(u);
+        o.setUnitaRadice(u);
         organigrammaRepository.save(o);
         return o;
     }
@@ -38,6 +38,11 @@ public class OrganigrammaService {
     @Transactional
     public Organigramma getById(int id){
         return organigrammaRepository.findById(id);
+    }
+
+    @Transactional
+    public void deleteOrg(int idOrg){
+        organigrammaRepository.deleteById(idOrg);
     }
 
 }

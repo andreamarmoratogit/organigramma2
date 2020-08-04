@@ -30,5 +30,12 @@ public class HomeController {
         return new ResponseEntity<>(o, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{idOrg}")
+    @ResponseBody
+    public ResponseEntity deleteOrg(@PathVariable int idOrg){
+        organigrammaService.deleteOrg(idOrg);
+        return new ResponseEntity( HttpStatus.OK);
+    }
+
 
 }
