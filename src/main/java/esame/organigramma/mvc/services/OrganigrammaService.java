@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 @Service
 public class OrganigrammaService {
     @Autowired
@@ -15,6 +17,7 @@ public class OrganigrammaService {
 
     @Transactional
     public Organigramma createOrganigramma(String nomeO, String nomeU){
+
         Organigramma o=new Organigramma();
         UnitaPadre u=unitaFactoryService.createUnitaOrganizzativa(nomeU, "unita");
         o.setNome(nomeO);
